@@ -26,6 +26,8 @@ function get_amqp(sendto, callme)
     console.log("in get_php (with ajax magix)");
     $.ajax({    
         type: "POST",
+        data: {"value":"5"},
+        //datatype: "json"
         url: "php/rpc_client.php",
         success: function(result_data) {
             callme(sendto, result_data);

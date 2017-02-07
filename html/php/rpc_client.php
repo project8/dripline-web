@@ -50,9 +50,12 @@ class FibonacciRpcClient {
 
 $value = 15;
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $data = array("value"=>3);
+    $data["post_vals"]=$_POST["value"];
     //$value = $_POST["value"];
     //echo $value;
-    echo 3;
+    echo json_encode($data);
+    //echo $_POST["value"];
 } else {
 echo $value;
 }
