@@ -47,13 +47,11 @@ class FibonacciRpcClient {
 };
 
 
-$value = 15;
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $ret_data = array("value"=>3);
-    $ret_data["post_vals"]=$_POST["value"];
+    $ret_data = array("index_value"=>$_POST["value"]);
 
     $fibonacci_rpc = new FibonacciRpcClient();
-    $ret_data["fib_val"] = $fibonacci_rpc->call($value);
+    $ret_data["fib_val"] = $fibonacci_rpc->call($ret_data["index_value"]);
 
     echo json_encode($ret_data);
 } else {
