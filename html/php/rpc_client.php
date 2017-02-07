@@ -1,7 +1,7 @@
 <?php
-//require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/SplClassLoader.php'; // https://gist.github.com/jwage/221634
-$classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php/PhpAmqpLib');
+//$classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php/PhpAmqpLib');
+$classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php');
 $classLoader->register();
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -50,22 +50,21 @@ class FibonacciRpcClient {
 
 $value = 15;
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $data = array("value"=>3);
-    $data["post_vals"]=$_POST["value"];
-    //$value = $_POST["value"];
-    //echo $value;
-    echo json_encode($data);
-    //echo $_POST["value"];
+    $ret_data = array("value"=>3);
+    $ret_data["post_vals"]=$_POST["value"];
+
+    $fibonacci_rpc = new FibonacciRpcClient();
+    $ret_data["fib_val"] = $fibonacci_rpc->call($value);
+
+    echo json_encode($ret_data);
 } else {
 echo $value;
 }
 
-/*
 $ret_data = array();
+/*
 
 //echo "requested index: ", $value, "<br>";
-$fibonacci_rpc = new FibonacciRpcClient();
-$response = $fibonacci_rpc->call($value);
 $ret_data["result"]=$response;
 //echo " result is: ", $response, "<br>";
 echo json_encode($ret_data);
