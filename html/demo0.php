@@ -13,7 +13,7 @@ function set_time() {
 <script>
 function local_update(name, value) {
     console.log("using local updater");
-    document.getElementById(name).innerHTML=value;
+    document.getElementById(name).innerHTML=JSON.stringify(JSON.parse(value), null, 2);
 }
 </script>
 
