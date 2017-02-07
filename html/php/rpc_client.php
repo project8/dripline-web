@@ -1,16 +1,8 @@
-<!--
-<html>
-<body>
-<form action="rpc_client.php", method="post">
-Value: <input type="int" name="value"><br>
-<input type="submit">
-</form>
-</body>
-</html>
--->
 <?php
-
-require_once __DIR__ . '/vendor/autoload.php';
+//require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/SplClassLoader.php'; // https://gist.github.com/jwage/221634
+$classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php/PhpAmqpLib');
+$classLoader->register();
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -55,11 +47,16 @@ class FibonacciRpcClient {
     }
 };
 
+
 $value = 15;
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $value = $_POST["value"];
-    echo $value;
+    //$value = $_POST["value"];
+    //echo $value;
+    echo 3;
+} else {
+echo $value;
 }
+
 /*
 $ret_data = array();
 

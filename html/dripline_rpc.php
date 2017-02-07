@@ -5,7 +5,7 @@
 </head>
 <script>
 function show_result(data) {
-    console.log("got here")
+    console.log("got here");
     document.getElementById("fib_result").innerHTML = data["result"];
 }
 function set_result(data) {

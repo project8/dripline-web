@@ -34,5 +34,10 @@ Time was: <span width=40 id="this_time"></span><button type="button" onClick=set
 <button type="button" onclick=get_php("ajax_here",local_update)>Post Ajax</button>
 <p id="ajax_here">No Value</p>
 
+<hr>
+<h1> Now with some ajax+amqp </h1>
+<button type="button" onclick=get_amqp("amqp_here",local_update)>Post Ajax</button>
+<p id="amqp_here">No Value</p>
+
 </body>
 </html>

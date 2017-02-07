@@ -10,3 +10,8 @@ RUN docker-php-source extract \
 
 ADD html /var/www/html
 ADD platform/php.ini /usr/local/etc/php/php.ini
+#ADD composer.json /var/www/html/composer.json
+
+#RUN cd /var/www/html &&\
+#    curl -O https://getcomposer.org/installer &&\
+#    php installer
