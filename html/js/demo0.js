@@ -3,7 +3,7 @@ function subdir_callback(value, callme)
     console.log("in demo0.js calling provided callback");
     callme(value, Date());
 }
-
+/*
 function get_php(sendto, callme)
 {
     console.log("in get_php (with ajax magix)");
@@ -19,7 +19,7 @@ function get_php(sendto, callme)
             console.log("e3: ", err3);
         }
     });
-}
+}*/
 
 function get_amqp(post_arg, callback_args, callme)
 {
@@ -29,7 +29,7 @@ function get_amqp(post_arg, callback_args, callme)
         type: "POST",
         data: {"value":post_arg},
         //datatype: "json"
-        url: "php/rpc_client.php",
+        url: "php/demo_rpc_client.php",
         success: function(result_data) {
             console.log("rpc result data is: ", result_data);
             callme(callback_args, result_data);
