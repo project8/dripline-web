@@ -36,8 +36,14 @@ Time was: <span width=40 id="this_time"></span><button type="button" onClick=set
 
 <hr>
 <h1> Now with some ajax+amqp </h1>
-<button type="button" onclick=get_amqp("amqp_here",local_update)>Post Ajax</button>
+<form id="fib_form">
+Fib. Index: <input type="int" name="fib_index">
+<button type="button" onclick=get_amqp(form.fib_index.value,"amqp_here",local_update)>Post Ajax</button>
+<!--
+<button type="button" onclick=get_amqp(form.fib_index.value,local_update)>Post Ajax</button>
+-->
 <p id="amqp_here">No Value</p>
+</form>
 
 </body>
 </html>

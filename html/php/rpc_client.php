@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/SplClassLoader.php'; // https://gist.github.com/jwage/221634
-//$classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php/PhpAmqpLib');
 $classLoader = new SplClassLoader('PhpAmqpLib', '/usr/share/php');
 $classLoader->register();
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -61,12 +60,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 echo $value;
 }
 
-$ret_data = array();
-/*
-
-//echo "requested index: ", $value, "<br>";
-$ret_data["result"]=$response;
-//echo " result is: ", $response, "<br>";
-echo json_encode($ret_data);
-*/
 ?>

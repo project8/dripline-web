@@ -21,16 +21,18 @@ function get_php(sendto, callme)
     });
 }
 
-function get_amqp(sendto, callme)
+function get_amqp(post_arg, callback_args, callme)
 {
     console.log("in get_php (with ajax magix)");
+    console.log("post arg is", post_arg);
     $.ajax({    
         type: "POST",
-        data: {"value":"5"},
+        data: {"value":post_arg},
         //datatype: "json"
         url: "php/rpc_client.php",
         success: function(result_data) {
-            callme(sendto, result_data);
+            console.log("rpc result data is: ", result_data);
+            callme(callback_args, result_data);
         },
         error: function(err1, err2, err3) {
             console.log("e1: ", err1);
