@@ -65,7 +65,7 @@ class DriplineRpcClient {
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //$ret_data = array("index_value"=>$_POST["value"]);
     $dripline_rpc = new DriplineRpcClient();
-    $reply = $dripline_rpc->call($_POST["target"], $_POST["msg"]);
+    $reply = $dripline_rpc->call($_POST["target"], json_encode($_POST["msg"]));
 
     echo $reply;//json_encode($ret_data);
 } else {

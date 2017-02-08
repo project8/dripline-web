@@ -21,8 +21,8 @@ function dripline_get(target, callback_args, callme)
     console.log("encoded:", JSON.stringify(msg));
     $.ajax({
         type: "POST",
-        data: {"target":target, "msg":JSON.stringify(msg)},
-        //data: {"target":target, "msg":msg},
+        //data: {"target":target, "msg":JSON.stringify(msg)},
+        data: {"target":target, "msg":msg},
         datatype: "json",
         url: "php/dripline_amqp_client.php",
         // this timeout value may need to be more adaptive later
