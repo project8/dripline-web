@@ -23,7 +23,7 @@ function dripline_get(target, callback_args, callme)
         type: "POST",
         data: {"target":target, "msg":JSON.stringify(msg)},
         //data: {"target":target, "msg":msg},
-        //datatype: "json",
+        datatype: "json",
         url: "php/dripline_amqp_client.php",
         // this timeout value may need to be more adaptive later
         timeout: 10000,
