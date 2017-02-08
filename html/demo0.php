@@ -23,7 +23,7 @@ function local_update(name, value) {
 <form id="fib_form">
 Fib. Index: <input type="int" name="fib_index">
 <button type="button" onclick=get_amqp(form.fib_index.value,"amqp_here",local_update)>Post Ajax</button>
-<p id="amqp_here">No Value</p>
+<pre id="amqp_here">No Value</pre>
 </form>
 
 </body>
