@@ -21,11 +21,12 @@ function dripline_get(target, callback_args, callme)
     console.log("encoded:", JSON.stringify(msg));
     $.ajax({
         type: "POST",
-        data: {"msg":JSON.stringify(msg)},
+        data: {"target":target, "msg":JSON.stringify(msg)},
         //data: {"target":target, "msg":msg},
         //datatype: "json",
         url: "php/dripline_amqp_client.php",
-        timeout: 100000,
+        // this timeout value may need to be more adaptive later
+        timeout: 10000,
         success: function(result_data) {
             console.log("rpc returned!");
             console.log("rpc result data is: ", result_data);

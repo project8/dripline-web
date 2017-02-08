@@ -36,7 +36,7 @@ class DriplineRpcClient {
         //}
     }
 
-    public function call($request_message) {
+    public function call($target, $request_message) {
         $this->response = null;
         $this->corr_id = uniqid();
 
@@ -51,7 +51,7 @@ class DriplineRpcClient {
             );
 
         /*basic_publish(msg, exchange, routing_key, mandatory, immediate, ticket)*/
-        $this->channel->basic_publish($msg, 'requests', 'peaches');
+        $this->channel->basic_publish($msg, 'requests', $target);
         $counter = 0;
         while(!$this->response and $counter<10) {
             $this->channel->wait();
@@ -65,7 +65,7 @@ class DriplineRpcClient {
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //$ret_data = array("index_value"=>$_POST["value"]);
     $dripline_rpc = new DriplineRpcClient();
-    $reply = $dripline_rpc->call($_POST["msg"]);
+    $reply = $dripline_rpc->call($_POST["target"], $_POST["msg"]);
 
     echo $reply;//json_encode($ret_data);
 } else {
