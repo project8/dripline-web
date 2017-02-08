@@ -33,7 +33,7 @@ function local_update(name, value) {
   <form id="set_form">
     Sensor name: <input type="text" name="set_target" list="sensors" spellcheck=false>
     New value: <input type="text" name="set_value">
-    <button type="button" onclick=set_amqp(form.set_target.value,form.set_value.value,"set_output",local_update)>Set</button><br>
+    <button type="button" onclick=dripline_set(form.set_target.value,form.set_value.value,"set_output",local_update)>Set</button><br>
     <pre id="set_output"></pre>
   </form>
 

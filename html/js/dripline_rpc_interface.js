@@ -1,11 +1,22 @@
+function dripline_set(target, value, callback_args, callme)
+{
+    console.log("in dripline_set");
+    dripline_base_send(target, {"values": [value]}, 0, callback_args, callme);
+}
+
 function dripline_get(target, callback_args, callme)
 {
     console.log("in dripline_get");
-    console.log("target is", target);
+    dripline_base_send(target, {}, 1, callback_args, callme);
+}
+
+function dripline_base_send(target, payload, msgop, callback_args, callme)
+{
+    console.log("in dripline_base_send");
     var msg = {
         "msgtype":3,
-        "msgop":1,
-        "payload": {},
+        "msgop":msgop,
+        "payload": payload,
         "timestamp": (new Date()).toJSON(),
         "sender_info": {
             "username": "laroque",
