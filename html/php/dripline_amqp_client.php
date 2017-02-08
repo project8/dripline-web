@@ -31,9 +31,9 @@ class DriplineRpcClient {
             array($this, 'on_response'));
     }
     public function on_response($rep) {
-        //if($rep->get('correlation_id') == $this->corr_id) {
+        if($rep->get('correlation_id') == $this->corr_id) {
             $this->response = $rep->body;
-        //}
+        }
     }
 
     public function call($target, $request_message) {
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $dripline_rpc = new DriplineRpcClient();
     $reply = $dripline_rpc->call($_POST["target"], json_encode($_POST["msg"]));
 
-    echo $reply;//json_encode($ret_data);
+    echo $reply;
 } else {
 echo $value;
 }
