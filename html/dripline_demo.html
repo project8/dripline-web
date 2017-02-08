@@ -1,6 +1,6 @@
 <html>
 <head>
-    <script type="text/javascript" src="js/demo0.js"></script>
+    <script type="text/javascript" src="js/dripline_rpc_interface.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 
@@ -24,7 +24,7 @@ function local_update(name, value) {
   <h2>Retrieve value</h2>
   <form id="get_form">
     Sensor name: <input type="text" name="get_target" list="sensors" spellcheck=false>
-    <button type="button" onclick=get_amqp(form.get_target.value,"get_output",local_update)>Get</button><br>
+    <button type="button" onclick=dripline_get(form.get_target.value,"get_output",local_update)>Get</button><br>
     <pre id="get_output"></pre>
   </form>
 

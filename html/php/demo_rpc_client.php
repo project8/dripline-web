@@ -18,9 +18,9 @@ class FibonacciRpcClient {
             '172.17.0.2', 5672, 'guest', 'guest');
         $this->channel = $this->connection->channel();
         list($this->callback_queue, ,) = $this->channel->queue_declare(
-            "", false, false, true, false);
+            "", false, false, true, true);
         $this->channel->basic_consume(
-            $this->callback_queue, '', false, false, false, false,
+            $this->callback_queue, "dripline_rpc_client_php", false, false, false, false,
             array($this, 'on_response'));
     }
     public function on_response($rep) {
