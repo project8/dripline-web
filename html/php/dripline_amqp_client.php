@@ -36,14 +36,19 @@ class DriplineRpcClient {
         }
     }
 
-    public function call($target, $request_message) {
+    /**
+     * send a dripline message
+     * @param string $target -- routing key the message is sent to
+     * @param json $request_message -- json object *not string* to use as message body (will be encoded)
+    */
+    public function send_message($target, $request_message) {
         $this->response = null;
         $this->corr_id = uniqid();
 
         /*AMQPMessage.__construct(body, properties)*/
         $msg = new AMQPMessage(
-            (string) $request_message,
-            //(string) json_encode($request_message),
+            //(string) $request_message,
+            (string) json_encode($request_message),
             array('correlation_id' => $this->corr_id,
                   'reply_to' => $this->callback_queue,
                   'content_encoding' => 'application/json',
@@ -65,7 +70,7 @@ class DriplineRpcClient {
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     //$ret_data = array("index_value"=>$_POST["value"]);
     $dripline_rpc = new DriplineRpcClient();
-    $reply = $dripline_rpc->call($_POST["target"], json_encode($_POST["msg"]));
+    $reply = $dripline_rpc->send_message($_POST["target"], $_POST["msg"]);
 
     echo $reply;
 } else {
