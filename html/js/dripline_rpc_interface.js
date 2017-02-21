@@ -25,9 +25,24 @@ var retcodes = {
     999: "Unhandled core-language or dependency exception"
 }
 
+/*
+sender_info required for all request payloads
+This data should either be computed at runtime or in a bootstrap script, should also
+consider if this data should be computed here, or if the php should assign it.
+*/
+var sender_info = {
+    "username": "laroque",
+    "exe": "apache2",
+    "package": "dripline-web",
+    "service_name": "dripline_amqp_client_php",
+    "hostname": "marvin",
+    "version": "wp2.1.1",
+    "commit": ""
+}
+
 function check_retcode(reply_message) {
     /*
-    Parse dripline reply message to check the return code for success
+    Parse dripline reply message to check the return code for success or raise alerts
     */
     var reply = JSON.parse(reply_message);
     var thiscode = reply["retcode"];
@@ -39,6 +54,7 @@ function check_retcode(reply_message) {
     } else {
         console.log("got an error, code", thiscode);
         console.log("that is '",retcodes[thiscode],"'");
+        alert("Dripline retcode: "+thiscode + " ("+retcodes[thiscode]+"):\n"+reply["return_msg"])
     }
 }
 
@@ -68,15 +84,7 @@ function dripline_base_send(target, payload, msgop, callback_args, page_callback
         "msgop":msgop,
         "payload": payload,
         "timestamp": (new Date()).toJSON(),
-        "sender_info": {
-            "username": "laroque",
-            "exe": "apache2",
-            "package": "dripline-web",
-            "service_name": "dripline_amqp_client_php",
-            "hostname": "marvin",
-            "version": "wp2.1.1",
-            "commit": ""
-        }
+        "sender_info": sender_info
     }
     console.log("msg is:", msg);
     console.log("encoded:", JSON.stringify(msg));
