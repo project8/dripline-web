@@ -13,5 +13,5 @@ RUN docker-php-source extract \
     && docker-php-ext-install -j$(nproc) bcmath \
     && docker-php-source delete
 
-ADD html /var/www/html
+ADD html /var/www/html/web
 ADD platform/php.ini /usr/local/etc/php/php.ini

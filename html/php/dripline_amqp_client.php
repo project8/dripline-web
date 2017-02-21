@@ -16,7 +16,7 @@ class DriplineRpcClient {
     public function __construct() {
         /* These args should all be configured elsewhere and loaded */
         $this->connection = new AMQPStreamConnection(
-            '172.17.0.2', 5672, 'guest', 'guest');
+            'rabbit_broker', 5672, 'guest', 'guest');
         $this->channel = $this->connection->channel();
 
         /*queue_declare(queue, passive, durable, exclusive, auto_delete, nowait, arguments, ticket*/
