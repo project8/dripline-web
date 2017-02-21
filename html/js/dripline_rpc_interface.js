@@ -1,13 +1,63 @@
+/*
+Dictionary of return codes from the dripline standard with their meanings
+*/
+var retcodes = {
+    1: "No action taken warning",
+    100: "Generic AMQP error",
+    101: "AMQP Connection Error",
+    102: "AMQP Routing Key Error",
+    200: "Generic Hardware Related Error",
+    201: "Hardware Connection Error",
+    202: "Hardware no Response Error",
+    300: "Generic Dripline Error",
+    301: "No message encoding error",
+    302: "Decoding Falied Error",
+    303: "Payload related error",
+    304: "Value Error",
+    305: "Timeout",
+    306: "Method not supported",
+    307: "Access denied",
+    308: "Invalid key",
+    400: "Generic Database Error",
+    500: "Generic DAQ Error",
+    501: "DAQ Not Enabled",
+    502: "DAQ Running",
+    999: "Unhandled core-language or dependency exception"
+}
+
+function check_retcode(reply_message) {
+    /*
+    Parse dripline reply message to check the return code for success
+    */
+    var reply = JSON.parse(reply_message);
+    var thiscode = reply["retcode"];
+    if (thiscode == 0) {
+        console.log("success code");
+    } else if (thiscode < 100) {
+        console.log("got a warning, code", thiscode);
+        console.log("that is '",retcodes[thiscode],"'");
+    } else {
+        console.log("got an error, code", thiscode);
+        console.log("that is '",retcodes[thiscode],"'");
+    }
+}
+
 function dripline_set(target, value, callback_args, page_callback)
 {
     console.log("in dripline_set");
-    dripline_base_send(target, {"values": [value]}, 0, callback_args, page_callback);
+    dripline_base_send(target, {"values": [value]}, 0, {"args":callback_args, "cb":page_callback}, dripline_request_cb);
 }
 
 function dripline_get(target, callback_args, page_callback)
 {
     console.log("in dripline_get");
-    dripline_base_send(target, {}, 1, callback_args, page_callback);
+    dripline_base_send(target, {}, 1, {"args":callback_args,"cb":page_callback}, dripline_request_cb);
+}
+
+function dripline_request_cb(callback_args, result) {
+    check_retcode(result);
+    var data = JSON.parse(result);
+    callback_args["cb"](callback_args["args"], JSON.stringify(data["payload"]));
 }
 
 function dripline_base_send(target, payload, msgop, callback_args, page_callback)
