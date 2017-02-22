@@ -56,6 +56,7 @@ function check_retcode(reply_message) {
         console.log("that is '",retcodes[thiscode],"'");
         alert("Dripline retcode: "+thiscode + " ("+retcodes[thiscode]+"):\n"+reply["return_msg"])
     }
+    return thiscode;
 }
 
 function dripline_set(target, value, callback_args, page_callback)
@@ -66,14 +67,17 @@ function dripline_set(target, value, callback_args, page_callback)
 
 function dripline_get(target, callback_args, page_callback)
 {
-    console.log("in dripline_get");
+    console.log("using dripline to 'get'", target);
     dripline_base_send(target, {}, 1, {"args":callback_args,"cb":page_callback}, dripline_request_cb);
 }
 
 function dripline_request_cb(callback_args, result) {
-    check_retcode(result);
-    var data = JSON.parse(result);
-    callback_args["cb"](callback_args["args"], JSON.stringify(data["payload"]));
+    retcode = check_retcode(result);
+    if (retcode == 0) {
+        var data = JSON.parse(result);
+        //callback_args["cb"](callback_args["args"], JSON.stringify(data["payload"]));
+        callback_args["cb"].apply(this, [callback_args["args"], JSON.stringify(data["payload"])]);
+    }
 }
 
 function dripline_base_send(target, payload, msgop, callback_args, page_callback)
