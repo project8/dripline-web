@@ -96,7 +96,7 @@ function dripline_base_send(target, payload, msgop, callback_args, page_callback
         type: "POST",
         data: {"target":target, "msg":msg},
         datatype: "json",
-        url: "/dripline-web/php/dripline_amqp_client.php",
+        url: "/dripline-web/src/php/dripline_amqp_client.php",
         // this timeout value may need to be more adaptive later
         timeout: 10000,
         success: function(result_data) {
