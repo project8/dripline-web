@@ -12,4 +12,3 @@ These can go into the issue tracker if they aren't resolved at the time of first
     - if no callback is provided, should something happen? maybe a popup saying a reply was received?
     - simplest-case success callback that lets the interface get the value out of the ReplyMessage
 1. Add js/callback_helpers.js to contain implementations of some of the more obvious callbacks (update the baseHTML of some object based on the reply message, pop up a window with an alert based on the return code, ???)
-1. Place the dripline constants (msgop and msgtype values as well as error codes) into a source file for easy access/reference.
