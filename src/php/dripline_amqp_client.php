@@ -77,8 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $reply = $dripline_rpc->send_message($_POST["target"], $_POST["msg"]);
 
     echo $reply;
-} else {
-echo $value;
 }
 
 ?>
