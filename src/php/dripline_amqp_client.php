@@ -5,6 +5,7 @@ $classLoader->register();
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+require_once __DIR__ . "/ensure_session.php";
 
 class DriplineRpcClient {
     private $connection;
@@ -14,9 +15,12 @@ class DriplineRpcClient {
     private $corr_id;
 
     public function __construct() {
-        /* These args should all be configured elsewhere and loaded */
+
         $this->connection = new AMQPStreamConnection(
-            'rabbit_broker', 5672, 'guest', 'guest');
+            $_SESSION["p8_amqp_config"]->host,
+            5672,
+            $_SESSION["p8_amqp_config"]->username,
+            $_SESSION["p8_amqp_config"]->password);
         $this->channel = $this->connection->channel();
 
         /*queue_declare(queue, passive, durable, exclusive, auto_delete, nowait, arguments, ticket*/
