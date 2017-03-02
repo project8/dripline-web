@@ -32,7 +32,7 @@ consider if this data should be computed here, or if the php should assign it.
 */
 var sender_info = {
     "username": "laroque",
-    "exe": "apache2",
+    "exe": location.pathname.split('/').slice(-1)[0],
     "package": "dripline-web",
     "service_name": "dripline_amqp_client_php",
     "hostname": "marvin",
