@@ -11,6 +11,14 @@ function local_update(name, value) {
 }
 </script>
 
+<style>
+pre {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+}
+</style>
+
 <!-- reusable list of sensor names -->
 <datalist id="sensors">
   <option value="flux_capacitance"></option>
@@ -20,6 +28,9 @@ function local_update(name, value) {
 <body>
 
   <h1>Simple dripline interface demo</h1>
+  <p>
+    Warning, this page will allow you to send dripline commands without any sanity checks. It is intended for debugging and testing where lower-level access is required, not regular operational tasks. If you find yourself using it regularly for the same task, consider making a dedicated page for that activity.
+  </p>
 
   <h2>Retrieve value</h2>
   <form id="get_form">
