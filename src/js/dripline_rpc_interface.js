@@ -35,7 +35,7 @@ var sender_info = {
     "exe": location.pathname.split('/').slice(-1)[0],
     "package": "dripline-web",
     "service_name": "dripline_amqp_client_php",
-    "hostname": "marvin",
+    "hostname": location.hostname,
     "version": "wp2.1.1",
     "commit": ""
 }
