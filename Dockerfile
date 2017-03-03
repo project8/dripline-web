@@ -6,10 +6,11 @@ RUN apt-get update && apt-get install -y \
         php-amqplib \
         ssl-cert
 
-# build ssl certs
+# build ssl/require certs
 RUN make-ssl-cert generate-default-snakeoil &&\
     a2enmod ssl &&\
-    ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf
+    ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/default-ssl.conf &&\
+    ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 
 # install docker-specific php dependencies
 RUN docker-php-source extract \
