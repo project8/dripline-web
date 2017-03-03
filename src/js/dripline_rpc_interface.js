@@ -25,17 +25,26 @@ var retcodes = {
     999: "Unhandled core-language or dependency exception"
 }
 
+function get_p8_username() {
+    check_user = document.cookie.match(new RegExp('(^| )' + "p8_username" + '=([^;]+)'));
+    if (check_user) {
+        user = check_user.slice(-1)[0];
+    } else {
+        user = "<unknown>";
+    }
+    return user;
+}
+
 /*
 sender_info required for all request payloads
 This data should either be computed at runtime or in a bootstrap script, should also
 consider if this data should be computed here, or if the php should assign it.
 */
 var sender_info = {
-    "username": "laroque",
-    "exe": "apache2",
+    "username": get_p8_username(),
+    "exe": location.pathname.split('/').slice(-1)[0],
     "package": "dripline-web",
-    "service_name": "dripline_amqp_client_php",
-    "hostname": "marvin",
+    "hostname": location.hostname,
     "version": "wp2.1.1",
     "commit": ""
 }
