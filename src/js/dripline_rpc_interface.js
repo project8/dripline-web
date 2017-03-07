@@ -25,6 +25,14 @@ var retcodes = {
     999: "Unhandled core-language or dependency exception"
 }
 
+var msg_op = {
+    'SET': 0,
+    'GET': 1,
+    'SEND': 7,
+    'RUN': 8,
+    'CMD': 9
+}
+
 function get_p8_username() {
     check_user = document.cookie.match(new RegExp('(^| )' + "p8_username" + '=([^;]+)'));
     if (check_user) {
@@ -71,20 +79,25 @@ function check_retcode(reply_message) {
 function dripline_set(target, value, callback_args, page_callback)
 {
     console.log("in dripline_set");
-    dripline_base_send(target, {"values": [value]}, 0, {"args":callback_args, "cb":page_callback}, dripline_request_cb);
+    dripline_base_send(target, {"values": [value]}, msg_op['SET'], {"args":callback_args, "cb":page_callback}, dripline_request_cb);
 }
 
 function dripline_get(target, callback_args, page_callback)
 {
     console.log("using dripline to 'get'", target);
-    dripline_base_send(target, {}, 1, {"args":callback_args,"cb":page_callback}, dripline_request_cb);
+    dripline_base_send(target, {}, msg_op['GET'], {"args":callback_args,"cb":page_callback}, dripline_request_cb);
+}
+
+function dripline_cmd(target, cmd_args, callback_args, page_callback)
+{
+    console.log("using dripline to 'cmd'", target);
+    dripline_base_send(target, cmd_args, msg_op['CMD'], {"args":callback_args,"cb":page_callback}, dripline_request_cb);
 }
 
 function dripline_request_cb(callback_args, result) {
     retcode = check_retcode(result);
     if (retcode == 0) {
         var data = JSON.parse(result);
-        //callback_args["cb"](callback_args["args"], JSON.stringify(data["payload"]));
         callback_args["cb"].apply(this, [callback_args["args"], JSON.stringify(data["payload"])]);
     }
 }
