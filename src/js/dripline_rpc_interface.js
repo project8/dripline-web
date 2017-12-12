@@ -76,22 +76,22 @@ function check_retcode(reply_message) {
     return thiscode;
 }
 
-function dripline_set(target, value, callback_args, page_callback)
+function dripline_set(target, value, callback_args, page_callback, timeout)
 {
     console.log("in dripline_set");
-    dripline_base_send(target, {"values": [value]}, msg_op['SET'], {"args":callback_args, "cb":page_callback}, dripline_request_cb);
+    dripline_base_send(target, {"values": [value]}, msg_op['SET'], {"args":callback_args, "cb":page_callback}, dripline_request_cb, timeout);
 }
 
-function dripline_get(target, callback_args, page_callback)
+function dripline_get(target, callback_args, page_callback, timeout)
 {
     console.log("using dripline to 'get'", target);
-    dripline_base_send(target, {}, msg_op['GET'], {"args":callback_args,"cb":page_callback}, dripline_request_cb);
+    dripline_base_send(target, {}, msg_op['GET'], {"args":callback_args,"cb":page_callback}, dripline_request_cb, timeout);
 }
 
-function dripline_cmd(target, cmd_args, callback_args, page_callback)
+function dripline_cmd(target, cmd_args, callback_args, page_callback, timeout)
 {
     console.log("using dripline to 'cmd'", target);
-    dripline_base_send(target, cmd_args, msg_op['CMD'], {"args":callback_args,"cb":page_callback}, dripline_request_cb);
+    dripline_base_send(target, cmd_args, msg_op['CMD'], {"args":callback_args,"cb":page_callback}, dripline_request_cb, timeout);
 }
 
 function dripline_request_cb(callback_args, result) {
@@ -102,8 +102,11 @@ function dripline_request_cb(callback_args, result) {
     }
 }
 
-function dripline_base_send(target, payload, msgop, callback_args, page_callback)
+function dripline_base_send(target, payload, msgop, callback_args, page_callback, timeout)
 {
+    if (timeout === undefined) {
+        timeout = 10000;
+    }
     console.log("in dripline_base_send");
     var msg = {
         "msgtype":3,
@@ -120,7 +123,7 @@ function dripline_base_send(target, payload, msgop, callback_args, page_callback
         datatype: "json",
         url: "/dripline-web/src/php/dripline_amqp_client.php",
         // this timeout value may need to be more adaptive later
-        timeout: 10000,
+        timeout: timeout,
         success: function(result_data) {
             console.log("rpc returned!");
             console.log("rpc result data is: ", result_data);
