@@ -1,7 +1,13 @@
-FROM php:7.0-apache
+## NOTE: for automatic builds on travis, these defaults are *not* used, update .travis.yml instead
+ARG img_user=amd64
+ARG img_repo=php
+ARG img_tag=7.3-apache
+
+FROM ${img_user}/${img_repo}:${img_tag}
 
 # Get amqp and ssl dependencies
-RUN apt-get update && apt-get install -y \
+RUN rm /etc/apt/preferences.d/no-debian-php && \
+    apt-get update && apt-get install -y \
         libpq-dev \
         php-amqplib \
         ssl-cert
