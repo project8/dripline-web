@@ -1,4 +1,4 @@
-## NOTE: for automatic builds on travis, these defaults are *not* used, update .travis.yml
+## NOTE: for automatic builds on travis, these defaults are *not* used, update .travis.yml instead
 ARG img_user=amd64
 ARG img_repo=php
 ARG img_tag=7.3-apache
