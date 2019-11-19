@@ -1,7 +1,8 @@
-FROM php:7.0-apache
+FROM php:7.3-apache
 
 # Get amqp and ssl dependencies
-RUN apt-get update && apt-get install -y \
+RUN rm /etc/apt/preferences.d/no-debian-php && \
+    apt-get update && apt-get install -y \
         libpq-dev \
         php-amqplib \
         ssl-cert

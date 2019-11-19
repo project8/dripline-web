@@ -1,0 +1,42 @@
+language: cpp
+
+dist: xenial
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+      - qemu-user-static
+
+env:
+  - DOCKER_CLI_EXPERIMENTAL=enabled
+  - OUTPUT_IMAGE_BASE=project8/dripline-web
+
+branches:
+  only:
+    - master
+    - develop
+    # anything that starts with 'v' and then is a M.m.p set of numbers
+    - /^v\d+\.\d+\.\d+(-S*)?$/
+    # anything that ends in '/build' (not including single quotes)
+    - /^.*\/build$/
+
+jobs:
+  include:
+    ### build images
+    ## amd64
+    - stage: build images
+      name: amd64
+      before_install: .travis/setup_emulation.sh
+      script:
+        - set -e
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - .travis/bootstrap_image.sh -u "" -r "" -t "" -a amd64 -i ${OUTPUT_IMAGE_BASE}:`echo ${TRAVIS_BRANCH} | tr / _`
+    ### build manifest
+    - stage: assemble manifest
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - .travis/build_manifest.sh -a amd64 -n ${OUTPUT_IMAGE_BASE}:`echo ${TRAVIS_BRANCH} | tr / _`
