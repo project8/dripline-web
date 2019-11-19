@@ -12,8 +12,7 @@ addons:
       - qemu-user-static
 
 env:
-  - DOCKER_CLI_EXPERIMENTAL=enabled
-  - OUTPUT_IMAGE_BASE=project8/dripline-web
+  - DOCKER_CLI_EXPERIMENTAL=enabled OUTPUT_IMAGE_BASE=project8/dripline-web
 
 branches:
   only:
