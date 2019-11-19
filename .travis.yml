@@ -33,7 +33,7 @@ jobs:
       script:
         - set -e
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - .travis/bootstrap_image.sh -u "" -r "" -t "" -a amd64 -i ${OUTPUT_IMAGE_BASE}:`echo ${TRAVIS_BRANCH} | tr / _`
+        - .travis/bootstrap_image.sh -u "-" -r "-" -t "-" -a amd64 -i ${OUTPUT_IMAGE_BASE}:`echo ${TRAVIS_BRANCH} | tr / _`
     ### build manifest
     - stage: assemble manifest
       script:
